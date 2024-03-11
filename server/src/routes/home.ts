@@ -3,12 +3,14 @@ import express from "express";
 const router = express.Router();
 
 // Controllers
-const {
+import {
   createNewUser,
   authenticateUser,
   editUserData,
-} = require("../controllers/userManage");
+} from "../controllers/userManage";
 
-router.get("/");
+router.get("/createuser", createNewUser);
+router.get("/authenticateuser", authenticateUser);
+router.get("/edituserdata", editUserData);
 
 export default router;
