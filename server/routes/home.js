@@ -1,9 +1,13 @@
 const express = require("express");
-
 const router = express.Router();
 
-router.get("/", function (req, res) {
-  console.log("Hello");
-});
+// Controllers
+const {
+  createNewUser,
+  authenticateUser,
+  editUserData,
+} = require("../controllers/userManage");
+
+router.get("/");
 
 module.exports = router;
