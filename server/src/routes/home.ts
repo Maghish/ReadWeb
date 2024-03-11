@@ -11,8 +11,8 @@ import {
 } from "../controllers/userManage";
 
 router.post("/getcurrentuser", getCurrentUser);
-router.get("/createuser", createNewUser);
-router.get("/authenticateuser", authenticateUser);
-router.get("/edituserdata", editUserData);
+router.post("/createuser", createNewUser);
+router.post("/authenticateuser", authenticateUser);
+router.post("/edituserdata", editUserData);
 
 export default router;
