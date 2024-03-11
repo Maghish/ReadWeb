@@ -39,12 +39,10 @@ async function authenticateUser(req: Request, res: Response) {
 
     // Check if user account's password is same
     if (allUsers[0].password === password) {
-      res
-        .status(200)
-        .json({
-          message: "Successfully authenticated user",
-          token: atob(email),
-        });
+      res.status(200).json({
+        message: "Successfully authenticated user",
+        token: atob(email),
+      });
     }
     // Else
     else {
@@ -62,8 +60,27 @@ async function authenticateUser(req: Request, res: Response) {
   }
 }
 
-async function getCurrentUser(req: Request, res: Response) {}
+async function getCurrentUser(req: Request, res: Response) {
+  try {
+    const { token } = req.body;
+    const email = btoa(token);
+    // It is 100% sure that the given token will be valid so we don't need error checking
+    const user = await userModel.find({ email: email });
+    res
+      .status(200)
+      .json({ message: "Successfully fetched current user", userData: user });
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred please try again" });
+      throw error;
+    }
+  }
+}
 
 function editUserData(req: Request, res: Response) {}
 
-export { createNewUser, authenticateUser, editUserData };
+export { createNewUser, authenticateUser, getCurrentUser, editUserData };
