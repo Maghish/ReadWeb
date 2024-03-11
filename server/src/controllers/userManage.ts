@@ -65,7 +65,8 @@ async function getCurrentUser(req: Request, res: Response) {
     const { token } = req.body;
     const email = btoa(token);
     // It is 100% sure that the given token will be valid so we don't need error checking
-    const user = await userModel.find({ email: email });
+    const allFoundUsers = await userModel.find({ email: email });
+    const user = allFoundUsers[0];
     res
       .status(200)
       .json({ message: "Successfully fetched current user", userData: user });
@@ -81,6 +82,53 @@ async function getCurrentUser(req: Request, res: Response) {
   }
 }
 
-function editUserData(req: Request, res: Response) {}
+async function editUserData(req: Request, res: Response) {
+  try {
+    const { token, mode, newData } = req.body; // newData is the data that need to be edited
+    const email = btoa(token);
+    const allFoundUsers = await userModel.find({ email: email });
+    const user = allFoundUsers[0];
+
+    if (mode === "email") {
+      try {
+        user.email = newData;
+        user.save();
+      } catch (error) {
+        res
+          .status(400)
+          .json({ message: "Unexpected error occurred, please try again" });
+      }
+    }
+    if (mode === "password") {
+      try {
+        user.password = newData;
+        user.save();
+      } catch (error) {
+        res
+          .status(400)
+          .json({ message: "Unexpected error occurred, please try again" });
+      }
+    }
+    if (mode === "username") {
+      try {
+        user.username = newData;
+        user.save();
+      } catch (error) {
+        res
+          .status(400)
+          .json({ message: "Unexpected error occurred, please try again" });
+      }
+    }
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred, please try again" });
+      throw error;
+    }
+  }
+}
 
 export { createNewUser, authenticateUser, getCurrentUser, editUserData };
