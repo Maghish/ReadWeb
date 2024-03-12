@@ -80,4 +80,4 @@ async function writeReviewOnBook(req: Request, res: Response) {}
 async function addTagsToBook(req: Request, res: Response) {}
 async function editTagsInBook(req: Request, res: Response) {}
 
-export { getAllBooks };
+export { getAllBooks, getBook };
