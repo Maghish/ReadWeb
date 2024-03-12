@@ -8,21 +8,17 @@ async function getAllBooks(req: Request, res: Response) {
   if (user) {
     if (filter === "None") {
       const allBooks = await bookModel.find({});
-      res
-        .status(200)
-        .json({
-          message: "Successfully fetched all books",
-          allBooks: allBooks,
-        });
+      res.status(200).json({
+        message: "Successfully fetched all books",
+        allBooks: allBooks,
+      });
     }
     if (filter === "User") {
       const allBooks = await bookModel.find({ author: extraData });
-      res
-        .status(200)
-        .json({
-          message: "Successfully fetched all books",
-          allBooks: allBooks,
-        });
+      res.status(200).json({
+        message: "Successfully fetched all books",
+        allBooks: allBooks,
+      });
     }
     if (filter === "Tag") {
       const allBooks = await bookModel.find({});
@@ -53,4 +49,4 @@ async function writeReviewOnBook(req: Request, res: Response) {}
 async function addTagsToBook(req: Request, res: Response) {}
 async function editTagsInBook(req: Request, res: Response) {}
 
-export default {};
+export { getAllBooks };
