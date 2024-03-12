@@ -1,4 +1,3 @@
-// Make tag model
 // Then create a field in book model to accept all tags created with tagModel
 // Then complete getAllBooks function
 // Work on other functions
