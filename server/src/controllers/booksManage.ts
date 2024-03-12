@@ -7,10 +7,40 @@ async function getAllBooks(req: Request, res: Response) {
   const user = await authenticateUser(token);
   if (user) {
     if (filter === "None") {
+      const allBooks = await bookModel.find({});
+      res
+        .status(200)
+        .json({
+          message: "Successfully fetched all books",
+          allBooks: allBooks,
+        });
     }
     if (filter === "User") {
+      const allBooks = await bookModel.find({ author: extraData });
+      res
+        .status(200)
+        .json({
+          message: "Successfully fetched all books",
+          allBooks: allBooks,
+        });
     }
     if (filter === "Tag") {
+      const allBooks = await bookModel.find({});
+      let allBooksWithSameTags: string[] = [];
+      allBooks.forEach((book) => {
+        if (extraData.length > 0) {
+          extraData.forEach((tag: string) => {
+            if (tag in book.tags) {
+              allBooksWithSameTags.push(tag);
+            }
+          });
+        }
+      });
+
+      res.status(200).json({
+        message: "Successfully fetched all books",
+        allTags: allBooksWithSameTags,
+      });
     }
   }
 }
