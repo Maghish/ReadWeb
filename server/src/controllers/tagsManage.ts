@@ -1,4 +1,3 @@
-// Then create a field in book model to accept all tags created with tagModel
 // Then complete getAllBooks function
 // Work on other functions
 // At last mention a route for all of the controllers

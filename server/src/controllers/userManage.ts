@@ -4,9 +4,8 @@ import userModel from "../models/userModel";
 async function authenticateUser(token: string) {
   const email = btoa(token);
   // It is 100% sure that the given token will be valid so we don't need error checking
-  const allFoundUsers = await userModel.find({ email: email });
-  const user = allFoundUsers[0];
-  return user;
+  const user = await userModel.findOne({ email: email });
+  return user!;
 }
 
 async function getUser(req: Request, res: Response) {
@@ -14,8 +13,7 @@ async function getUser(req: Request, res: Response) {
     const { token, username } = req.body;
     const currentUser = await authenticateUser(token);
     if (currentUser) {
-      const allFoundUsers = await userModel.find({ username: username });
-      const user = allFoundUsers[0];
+      const user = await userModel.findOne({ username: username });
       res
         .status(200)
         .json({ message: "Successfully found user", userData: user });
