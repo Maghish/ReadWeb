@@ -4,7 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 
 import homeRoute from "./routes/home";
-import bookRoute from "./routes/book";
+import bookRoute from "./routes/books";
 
 dotenv.config();
 const app = express();
