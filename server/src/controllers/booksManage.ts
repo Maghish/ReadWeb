@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { authenticateUser } from "./userManage";
-// Models
-
 import bookModel from "../models/bookModel";
 
 async function getAllBooks(req: Request, res: Response) {

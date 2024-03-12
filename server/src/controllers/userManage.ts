@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-
-// Models
 import userModel from "../models/userModel";
 
 async function authenticateUser(token: string) {
@@ -156,4 +154,11 @@ async function editUserData(req: Request, res: Response) {
   }
 }
 
-export { createNewUser, loginUser, getCurrentUser, editUserData, getUser };
+export {
+  createNewUser,
+  loginUser,
+  getCurrentUser,
+  editUserData,
+  getUser,
+  authenticateUser,
+};
