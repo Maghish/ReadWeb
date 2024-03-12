@@ -9,6 +9,7 @@ const bookSchema = new Schema({
   ratings: { type: Decimal128, default: 5.0, required: true },
   reviews: { type: [], default: [], required: true },
   content: { type: [], required: true },
+  tags: { type: [], required: true },
   /*
     Content: 
       [
@@ -28,4 +29,4 @@ const bookSchema = new Schema({
   */
 });
 
-export default mongoose.model("Book", bookSchema);
+export default mongoose.model("BookModel", bookSchema);
