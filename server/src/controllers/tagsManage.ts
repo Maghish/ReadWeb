@@ -36,6 +36,14 @@ async function getAllTags(req: Request, res: Response) {
 
 async function getTag(req: Request, res: Response) {
   try {
+    const { token, name } = req.body;
+    const user = await authenticateUser(token);
+    if (user) {
+      const tag = await tagModel.find({ name: name });
+      res
+        .status(200)
+        .json({ message: "Successfully fetched tag", tagData: tag });
+    }
   } catch (error: any) {
     if (error.response) {
       res.status(400).json({ message: error.response });
