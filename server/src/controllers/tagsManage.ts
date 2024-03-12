@@ -54,3 +54,5 @@ async function getTag(req: Request, res: Response) {
     }
   }
 }
+
+export { getTag, getAllTags };
