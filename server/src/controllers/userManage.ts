@@ -3,6 +3,28 @@ import { Request, Response } from "express";
 // Models
 import userModel from "../models/userModel";
 
+async function authenticateUser(token: string) {
+  const email = btoa(token);
+  // It is 100% sure that the given token will be valid so we don't need error checking
+  const allFoundUsers = await userModel.find({ email: email });
+  const user = allFoundUsers[0];
+  return user;
+}
+
+async function getUser(req: Request, res: Response) {
+  try {
+    const { username } = req.body;
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred, please try again" });
+    }
+  }
+}
+
 async function createNewUser(req: Request, res: Response) {
   try {
     const { username, email, password } = req.body;
@@ -28,7 +50,7 @@ async function createNewUser(req: Request, res: Response) {
   }
 }
 
-async function authenticateUser(req: Request, res: Response) {
+async function loginUser(req: Request, res: Response) {
   try {
     const { email, password } = req.body;
     const allUsers = await userModel.find({ email: email });
@@ -63,13 +85,10 @@ async function authenticateUser(req: Request, res: Response) {
 async function getCurrentUser(req: Request, res: Response) {
   try {
     const { token } = req.body;
-    const email = btoa(token);
-    // It is 100% sure that the given token will be valid so we don't need error checking
-    const allFoundUsers = await userModel.find({ email: email });
-    const user = allFoundUsers[0];
+    const user = await authenticateUser(token);
     res
       .status(200)
-      .json({ message: "Successfully fetched current user", userData: user });
+      .json({ message: "Successfully found current user", userData: user });
   } catch (error: any) {
     if (error.response) {
       res.status(400).json({ message: error.response });
@@ -85,9 +104,7 @@ async function getCurrentUser(req: Request, res: Response) {
 async function editUserData(req: Request, res: Response) {
   try {
     const { token, mode, newData } = req.body; // newData is the data that need to be edited
-    const email = btoa(token);
-    const allFoundUsers = await userModel.find({ email: email });
-    const user = allFoundUsers[0];
+    const user = await authenticateUser(token);
 
     if (mode === "email") {
       try {
@@ -131,4 +148,4 @@ async function editUserData(req: Request, res: Response) {
   }
 }
 
-export { createNewUser, authenticateUser, getCurrentUser, editUserData };
+export { createNewUser, loginUser, getCurrentUser, editUserData, getUser };
