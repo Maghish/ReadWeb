@@ -13,7 +13,15 @@ async function authenticateUser(token: string) {
 
 async function getUser(req: Request, res: Response) {
   try {
-    const { username } = req.body;
+    const { token, username } = req.body;
+    const currentUser = await authenticateUser(token);
+    if (currentUser) {
+      const allFoundUsers = await userModel.find({ username: username });
+      const user = allFoundUsers[0];
+      res
+        .status(200)
+        .json({ message: "Successfully found user", userData: user });
+    }
   } catch (error: any) {
     if (error.response) {
       res.status(400).json({ message: error.response });
