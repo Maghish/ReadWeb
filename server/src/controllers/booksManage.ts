@@ -192,4 +192,4 @@ async function writeReviewOnBook(req: Request, res: Response) {}
 async function addTagsToBook(req: Request, res: Response) {}
 async function editTagsInBook(req: Request, res: Response) {}
 
-export { getAllBooks, getBook };
+export { getAllBooks, getBook, createBook, editBook, deleteBook };
