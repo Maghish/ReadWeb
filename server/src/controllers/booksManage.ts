@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { authenticateUser } from "./userManage";
 import bookModel from "../models/bookModel";
+import mongoose from "mongoose";
 
 async function getAllBooks(req: Request, res: Response) {
   try {
@@ -105,10 +106,11 @@ async function createBook(req: Request, res: Response) {
         ratings: 5.0,
         reviews: [],
       });
-      await newBook.save();
-      res
-        .status(200)
-        .json({ message: "Successfully created new book", bookData: newBook });
+      const newBookSaved = await newBook.save();
+      res.status(200).json({
+        message: "Successfully created new book",
+        bookData: newBookSaved,
+      });
     }
   } catch (error: any) {
     if (error.response) {
@@ -121,7 +123,44 @@ async function createBook(req: Request, res: Response) {
   }
 }
 
-async function editBook(req: Request, res: Response) {}
+async function editBook(req: Request, res: Response) {
+  const { token, bookID, mode, data } = req.body; // data is the data that will replace the already existing data
+  const user = await authenticateUser(token);
+  if (user) {
+    const book = await bookModel.findById(bookID);
+    if (mode === "name") {
+      book!.name = data;
+      const newSavedBook = await book!.save();
+      res
+        .status(200)
+        .json({
+          message: "Successfully edited the book",
+          bookData: newSavedBook,
+        });
+    }
+    if (mode === "description") {
+      book!.description = data;
+      const newSavedBook = await book!.save();
+      res
+        .status(200)
+        .json({
+          message: "Successfully edited the book",
+          bookData: newSavedBook,
+        });
+    }
+    if (mode === "content") {
+      book!.content = data;
+      const newSavedBook = await book!.save();
+      res
+        .status(200)
+        .json({
+          message: "Successfully edited the book",
+          bookData: newSavedBook,
+        });
+    }
+  }
+}
+
 async function deleteBook(req: Request, res: Response) {}
 async function rateBook(req: Request, res: Response) {}
 async function writeReviewOnBook(req: Request, res: Response) {}
