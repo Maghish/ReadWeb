@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        UbuntuLight: ["Ubuntu", "sans-serif"],
+        UbuntuRegular: ["Ubuntu", "sans-serif"],
       },
       colors: {
         palette1: "#F5F0BB",
