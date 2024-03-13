@@ -223,20 +223,21 @@ async function writeReviewOnBook(req: Request, res: Response) {
 async function addTagsToBook(req: Request, res: Response) {
   try {
     const { token, bookID, tags } = req.body;
-    const book = await bookModel.findById(bookID);
-    if (book!.tags.length <= 0) {
-      book!.tags = tags;
-    } else {
-      book!.tags = [...book!.tags, ...tags];
-    }
+    const user = await authenticateUser(token);
+    if (user) {
+      const book = await bookModel.findById(bookID);
+      if (book!.tags.length <= 0) {
+        book!.tags = tags;
+      } else {
+        book!.tags = [...book!.tags, ...tags];
+      }
 
-    const newSavedBook = await book!.save();
-    res
-      .status(200)
-      .json({
+      const newSavedBook = await book!.save();
+      res.status(200).json({
         message: "Successfully added tags to the book",
         bookData: newSavedBook,
       });
+    }
   } catch (error: any) {
     if (error.response) {
       res.status(400).json({ message: error.response });
@@ -248,7 +249,31 @@ async function addTagsToBook(req: Request, res: Response) {
   }
 }
 
-async function editTagsInBook(req: Request, res: Response) {}
+async function editTagsInBook(req: Request, res: Response) {
+  try {
+    // The addition and subtraction of the tags will be implemented in the client itself
+    // Hence the client will provide a final set of all tags
+    const { token, bookID, tags } = req.body;
+    const user = await authenticateUser(token);
+    if (user) {
+      const book = await bookModel.findById(bookID);
+      book!.tags = tags;
+      const newSavedBook = await book!.save();
+      res.status(200).json({
+        message: "Successfully edited tags in the book",
+        bookData: newSavedBook,
+      });
+    }
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred, please try again" });
+    }
+  }
+}
 
 export {
   getAllBooks,
@@ -258,4 +283,5 @@ export {
   deleteBook,
   writeReviewOnBook,
   addTagsToBook,
+  editTagsInBook,
 };
