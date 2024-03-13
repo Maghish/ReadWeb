@@ -165,7 +165,28 @@ async function editBook(req: Request, res: Response) {
   }
 }
 
-async function deleteBook(req: Request, res: Response) {}
+async function deleteBook(req: Request, res: Response) {
+  try {
+    const { token, bookID } = req.body;
+    const user = await authenticateUser(token);
+    if (user) {
+      bookModel
+        .findByIdAndDelete(bookID)
+        .then(() =>
+          res.status(400).json({ message: "Successfully deleted the book" })
+        );
+    }
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred, please try again" });
+    }
+  }
+}
+
 async function rateBook(req: Request, res: Response) {}
 async function writeReviewOnBook(req: Request, res: Response) {}
 async function addTagsToBook(req: Request, res: Response) {}
