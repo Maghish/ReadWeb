@@ -3,6 +3,9 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        UbuntuLight: ["Ubuntu", "sans-serif"],
+      },
       colors: {
         palette1: "#F5F0BB",
         palette2: "#C4DFAA",
