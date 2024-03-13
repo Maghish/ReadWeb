@@ -10,6 +10,24 @@ const bookSchema = new Schema({
   description: { type: String, required: true },
   ratings: { type: Decimal128, default: 5.0, required: true },
   reviews: { type: [], default: [], required: true },
+
+  /*
+    reviews: [
+      {
+        author: string || "Foo",
+        content: string || "Hello! This book is amazing!"
+      },
+      {
+        author: string || "Bar",
+        content: string || "Awesome book!"
+      },
+      {
+        author: string || "Baz",
+        content: string || "Deserves 5/5 reviews!"
+      }
+    ]
+  */
+
   content: { type: [], required: true },
 
   /*
