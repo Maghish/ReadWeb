@@ -72,7 +72,55 @@ async function getBook(req: Request, res: Response) {
   }
 }
 
-async function createBook(req: Request, res: Response) {}
+async function createBook(req: Request, res: Response) {
+  try {
+    const { token, bookName, description, tags, content } = req.body;
+    /*
+      bookName: string || "",
+      description: string || "",
+      tags: string[] || ["Anime", "Fantasy"]
+      content: any[] || [
+        {
+          chapter: string || "Introduction",
+          content: string || "Lorem Ipsum..........",
+        },
+        {
+          chapter: string || "Background Story",
+          content: string || "Lorem Ipsum..........",
+        },
+        {
+          chapter: string || "Ending",
+          content: string || "Lorem Ipsum.........."
+        }
+      ]
+    */
+    const user = await authenticateUser(token);
+    if (user) {
+      const newBook = new bookModel({
+        author: user.username,
+        name: bookName,
+        description: description,
+        tags: tags,
+        content: content,
+        ratings: 5.0,
+        reviews: [],
+      });
+      await newBook.save();
+      res
+        .status(200)
+        .json({ message: "Successfully created new book", bookData: newBook });
+    }
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred, please try again" });
+    }
+  }
+}
+
 async function editBook(req: Request, res: Response) {}
 async function deleteBook(req: Request, res: Response) {}
 async function rateBook(req: Request, res: Response) {}

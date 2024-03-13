@@ -13,19 +13,19 @@ const bookSchema = new Schema({
   content: { type: [], required: true },
 
   /*
-    Content: 
+    content: 
       [
         {
-          chapter: String || "Introduction",
-          content: String || "Lorem Ipsum..........",
+          chapter: string || "Introduction",
+          content: string || "Lorem Ipsum..........",
         },
         {
-          chapter: String || "Background Story",
-          content: String || "Lorem Ipsum..........",
+          chapter: string || "Background Story",
+          content: string || "Lorem Ipsum..........",
         },
         {
-          chapter: String || "Ending",
-          content: String || "Lorem Ipsum.........."
+          chapter: string || "Ending",
+          content: string || "Lorem Ipsum.........."
         }
       ]
   */
