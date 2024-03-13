@@ -188,8 +188,48 @@ async function deleteBook(req: Request, res: Response) {
 }
 
 async function rateBook(req: Request, res: Response) {}
-async function writeReviewOnBook(req: Request, res: Response) {}
+
+async function writeReviewOnBook(req: Request, res: Response) {
+  try {
+    const { token, bookID, reviewContent } = req.body;
+    const user = await authenticateUser(token);
+    if (user) {
+      const book = await bookModel.findById(bookID);
+      if (book!.reviews.length <= 0) {
+        book!.reviews = [{ author: user.username, content: reviewContent }];
+      } else {
+        book!.reviews = [
+          ...book!.reviews,
+          { author: user.username, content: reviewContent },
+        ];
+      }
+
+      const newSavedBook = await book!.save();
+      res.status(200).json({
+        message: "Successfully wrote a review on the book",
+        bookData: newSavedBook,
+      });
+    }
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred, please try again" });
+    }
+  }
+}
+
 async function addTagsToBook(req: Request, res: Response) {}
+
 async function editTagsInBook(req: Request, res: Response) {}
 
-export { getAllBooks, getBook, createBook, editBook, deleteBook };
+export {
+  getAllBooks,
+  getBook,
+  createBook,
+  editBook,
+  deleteBook,
+  writeReviewOnBook,
+};
