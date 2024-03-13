@@ -41,7 +41,11 @@ async function createNewUser(req: Request, res: Response) {
     await newUser.save();
     res
       .status(200)
-      .json({ message: "Successfully created new user", token: atob(email) });
+      .json({
+        message: "Successfully created new user",
+        token: atob(email),
+        userData: newUser,
+      });
   } catch (error: any) {
     if (error.response) {
       res.status(400).json({ message: error.response });
