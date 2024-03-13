@@ -124,39 +124,43 @@ async function createBook(req: Request, res: Response) {
 }
 
 async function editBook(req: Request, res: Response) {
-  const { token, bookID, mode, data } = req.body; // data is the data that will replace the already existing data
-  const user = await authenticateUser(token);
-  if (user) {
-    const book = await bookModel.findById(bookID);
-    if (mode === "name") {
-      book!.name = data;
-      const newSavedBook = await book!.save();
-      res
-        .status(200)
-        .json({
+  try {
+    const { token, bookID, mode, data } = req.body; // data is the data that will replace the already existing data
+    const user = await authenticateUser(token);
+    if (user) {
+      const book = await bookModel.findById(bookID);
+      if (mode === "name") {
+        book!.name = data;
+        const newSavedBook = await book!.save();
+        res.status(200).json({
           message: "Successfully edited the book",
           bookData: newSavedBook,
         });
+      }
+      if (mode === "description") {
+        book!.description = data;
+        const newSavedBook = await book!.save();
+        res.status(200).json({
+          message: "Successfully edited the book",
+          bookData: newSavedBook,
+        });
+      }
+      if (mode === "content") {
+        book!.content = data;
+        const newSavedBook = await book!.save();
+        res.status(200).json({
+          message: "Successfully edited the book",
+          bookData: newSavedBook,
+        });
+      }
     }
-    if (mode === "description") {
-      book!.description = data;
-      const newSavedBook = await book!.save();
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
       res
-        .status(200)
-        .json({
-          message: "Successfully edited the book",
-          bookData: newSavedBook,
-        });
-    }
-    if (mode === "content") {
-      book!.content = data;
-      const newSavedBook = await book!.save();
-      res
-        .status(200)
-        .json({
-          message: "Successfully edited the book",
-          bookData: newSavedBook,
-        });
+        .status(400)
+        .json({ message: "Unexpected error occurred, please try again" });
     }
   }
 }
