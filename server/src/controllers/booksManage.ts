@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { authenticateUser } from "./userManage";
 import bookModel from "../models/bookModel";
-import mongoose from "mongoose";
 
 async function getAllBooks(req: Request, res: Response) {
   try {
@@ -221,7 +220,33 @@ async function writeReviewOnBook(req: Request, res: Response) {
   }
 }
 
-async function addTagsToBook(req: Request, res: Response) {}
+async function addTagsToBook(req: Request, res: Response) {
+  try {
+    const { token, bookID, tags } = req.body;
+    const book = await bookModel.findById(bookID);
+    if (book!.tags.length <= 0) {
+      book!.tags = tags;
+    } else {
+      book!.tags = [...book!.tags, ...tags];
+    }
+
+    const newSavedBook = await book!.save();
+    res
+      .status(200)
+      .json({
+        message: "Successfully added tags to the book",
+        bookData: newSavedBook,
+      });
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred, please try again" });
+    }
+  }
+}
 
 async function editTagsInBook(req: Request, res: Response) {}
 
@@ -232,4 +257,5 @@ export {
   editBook,
   deleteBook,
   writeReviewOnBook,
+  addTagsToBook,
 };
