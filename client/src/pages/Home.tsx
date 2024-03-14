@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
+import { HomePageProps } from "../vite-env";
 
-function Home() {
+function Home(props:HomePageProps) {
   return (
     <>
       <Navbar />
