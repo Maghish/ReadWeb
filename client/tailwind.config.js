@@ -4,13 +4,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        UbuntuRegular: ["Ubuntu", "sans-serif"],
+        Ubuntu: ["Ubuntu", "sans-serif"],
       },
       colors: {
-        palette1: "#F5F0BB",
-        palette2: "#C4DFAA",
-        palette3: "#90C8AC",
-        palette4: "#73A9AD",
+        palette1: "#d90429",
+        palette2: "#ef233c",
+        palette3: "#edf2f4",
+        palette4: "#8d99ae",
+        palette5: "#2b2d42",
       },
     },
   },
