@@ -1,24 +1,25 @@
 function Navbar() {
   return (
-    <div className="flex flex-row items-center w-full bg-palette5 px-4 py-2">
-      <p className="font-extrabold font-Ubuntu text-lg text-palette3">
+    <div className="flex flex-row items-center w-full h-[60px] bg-palette9 px-[50px] py-[17px]">
+      <a
+        className="font-Ubuntu font-bold text-xl text-palette1 cursor-pointer"
+        href="/"
+      >
         ReadWeb
-      </p>
-      <ul className="flex flex-row items-center ml-[30px] font-Ubuntu">
-        <li className="mr-[14px] text-palette3 text-sm cursor-pointer hover:text-palette2">
-          About
+      </a>
+      <ul className="flex flex-row ml-[70px] items-center">
+        <li className="font-Ubuntu text-palette2 mr-6 cursor-pointer transition duration-150 ease-in hover:text-palette5">
+          <a href="/about">About</a>
         </li>
-        <li className="mr-[14px] text-palette3 text-sm cursor-pointer hover:text-palette2">
-          View all
+        <li className="font-Ubuntu text-palette2 mr-6 cursor-pointer transition duration-150 ease-in hover:text-palette5">
+          <a href="/explore">Explore</a>
         </li>
-        <li className="mr-[14px] text-palette3 text-sm cursor-pointer hover:text-palette2">
-          Write a book
+        <li className="font-Ubuntu text-palette2 cursor-pointer transition duration-150 ease-in hover:text-palette5">
+          <a href="https://github.com/Maghish/ReadWeb.git">Github</a>
         </li>
       </ul>
-      <form className="ml-auto  h-full">
-        <input className="outline-none bg-palette3 rounded-md text-palette5 px-3 py-1 text-sm" />
-      </form>
-      <button className="ml-auto rounded-lg bg-palette1 p-2 px-3 font-Ubuntu text-palette3">
+      <button className=""></button>
+      <button className="ml-auto bg-inherit border-2 border-palette1 w-[110px] h-[45px] rounded-lg font-Ubuntu text-palette1">
         Logout
       </button>
     </div>
