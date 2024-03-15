@@ -1,10 +1,5 @@
 /// <reference types="vite/client" />
 
-interface HomePageProps {
-  currentPage: "Guest" | "Home";  
-  userCred?: any
-}
-
 interface NavbarComponentProps {
   page: "Guest" | "Home" | "About" | "Explore" 
   userCred?: any

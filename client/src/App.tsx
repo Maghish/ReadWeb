@@ -15,56 +15,6 @@ import Navbar from "./components/Navbar";
 
 axios.defaults.baseURL = "http://localhost:7000";
 
-function DecidePage() {
-  const [currentPage, setCurrentPage] = useState("");
-  const [userToken, setUserToken] = useState("");
-  const [currentUser, setCurrentUser] = useState<string | any>("");
-
-  useEffect(() => {
-    try {
-      const token = GetCookie("userToken");
-      if (token) {
-        setUserToken(token);
-      } else {
-        setCurrentPage("Guest");
-      }
-    } catch (error: any) {
-      throw error;
-    }
-
-    async function getCurrentUser() {
-      try {
-        const res = await axios.post("/api/auth/getcurrentuser", {
-          token: userToken,
-        });
-        if (res.data.userData) {
-          setCurrentUser(res.data.userData);
-          setCurrentPage("Home");
-        }
-      } catch (error) {
-        setCurrentPage("Guest");
-      }
-    }
-    getCurrentUser();
-  }, []);
-
-  if (currentPage === "Home") {
-    return (
-      <>
-        <Navbar page="Home" userCred={currentUser} />
-        <Home currentPage="Home" userCred={currentUser} />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Navbar page="Guest" />
-        <Home currentPage="Guest" />
-      </>
-    );
-  }
-}
-
 export default function App() {
   let routes = useRoutes([
     {
@@ -72,7 +22,7 @@ export default function App() {
       children: [
         {
           index: true,
-          element: <DecidePage />,
+          element: <Home />,
         },
         {
           path: "about",
