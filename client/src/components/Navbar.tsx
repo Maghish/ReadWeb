@@ -1,7 +1,24 @@
 import { FaRegCircleUser } from "react-icons/fa6";
 import { IconContext } from "react-icons";
+import {
+  NavbarComponentProps,
+  UserProfileButtonComponentProps,
+} from "../vite-env";
 
-function Navbar() {
+function UserProfileButton(props: UserProfileButtonComponentProps) {
+  return (
+    <div className="ml-auto group flex flex-col items-end cursor-pointer w-auto">
+      <IconContext.Provider value={{ size: "25px", color: "#FFFFFF" }}>
+        <FaRegCircleUser />
+      </IconContext.Provider>
+      <span className="absolute w-max top-[50px] right-8 scale-0 border-2 border-[#4b4b4b] bg-[#373737] p-2 text-xs text-palette2 group-hover:scale-100"></span>
+    </div>
+  );
+}
+
+function LoginSignupButtons() {}
+
+function Navbar(props: NavbarComponentProps) {
   return (
     <div className="flex flex-row items-center w-full h-[60px] bg-palette9 px-[50px] py-[17px]">
       <a
@@ -21,12 +38,7 @@ function Navbar() {
           <a href="https://github.com/Maghish/ReadWeb.git">Github</a>
         </li>
       </ul>
-      <div className="ml-auto group flex flex-col items-end cursor-pointer w-auto">
-        <IconContext.Provider value={{ size: "25px", color: "#FFFFFF" }}>
-          <FaRegCircleUser />
-        </IconContext.Provider>
-        <span className="absolute w-max top-[50px] right-8 scale-0 border-2 border-[#4b4b4b] bg-[#373737] p-2 text-xs text-palette2 group-hover:scale-100"></span>
-      </div>
+      <UserProfileButton userCred={props.userCred} />
       {/* <button className="bg-inherit border-2 border-palette1 w-[110px] h-[45px] rounded-lg font-Ubuntu text-palette1">
         Logout
       </button> */}
