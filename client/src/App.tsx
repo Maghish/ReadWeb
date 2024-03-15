@@ -8,10 +8,9 @@ import SetCookie from "./functions/SetCookie";
 import RemoveCookie from "./functions/RemoveCookie";
 
 import Home from "./pages/Home";
-import About from "./pages/About";
+import MyBooks from "./pages/MyBooks";
 import Explore from "./pages/Explore";
 import PageNotFound from "./pages/PageNotFound";
-import Navbar from "./components/Navbar";
 
 axios.defaults.baseURL = "http://localhost:7000";
 
@@ -25,8 +24,8 @@ export default function App() {
           element: <Home />,
         },
         {
-          path: "about",
-          element: <About />,
+          path: "mybooks",
+          element: <MyBooks />,
         },
         {
           path: "explore",
