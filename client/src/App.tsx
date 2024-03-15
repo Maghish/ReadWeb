@@ -16,7 +16,7 @@ import Navbar from "./components/Navbar";
 axios.defaults.baseURL = "http://localhost:7000";
 
 function DecidePage() {
-  const [currentPage, setCurrentPage] = useState("Home");
+  const [currentPage, setCurrentPage] = useState("");
   const [userToken, setUserToken] = useState("");
   const [currentUser, setCurrentUser] = useState<string | any>("");
 
@@ -37,8 +37,10 @@ function DecidePage() {
         const res = await axios.post("/api/auth/getcurrentuser", {
           token: userToken,
         });
-        setCurrentUser(res.data.userData);
-        setCurrentPage("Home");
+        if (res.data.userData) {
+          setCurrentUser(res.data.userData);
+          setCurrentPage("Home");
+        }
       } catch (error) {
         setCurrentPage("Guest");
       }

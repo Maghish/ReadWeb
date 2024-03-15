@@ -16,7 +16,9 @@ function UserProfileButton(props: UserProfileButtonComponentProps) {
   );
 }
 
-function LoginSignupButtons() {}
+function LoginSignupButtons() {
+  return <></>
+}
 
 function Navbar(props: NavbarComponentProps) {
   return (
@@ -38,10 +40,7 @@ function Navbar(props: NavbarComponentProps) {
           <a href="https://github.com/Maghish/ReadWeb.git">Github</a>
         </li>
       </ul>
-      <UserProfileButton userCred={props.userCred} />
-      {/* <button className="bg-inherit border-2 border-palette1 w-[110px] h-[45px] rounded-lg font-Ubuntu text-palette1">
-        Logout
-      </button> */}
+      {props.page === "Guest" ? <LoginSignupButtons /> : <UserProfileButton userCred={props.userCred} />}
     </div>
   );
 }
