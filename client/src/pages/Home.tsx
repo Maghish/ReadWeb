@@ -11,17 +11,8 @@ function Home() {
   useEffect(() => {
     try {
       const token = GetCookie("userToken");
-      if (token) {
-        setUserToken(token);
-      } else {
-        setUserLoggedIn(false);
-      }
-    } catch (error: any) {
-      throw error;
-    }
-
-    try {
-      GetCurrentUser(userToken).then((res) => {
+      setUserToken(userToken);
+      GetCurrentUser(token).then((res) => {
         if (res) {
           setCurrentUser(res);
           setUserLoggedIn(true);

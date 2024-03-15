@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function GetCurrentUser(token: string) {
+async function GetCurrentUser(token: string | undefined) {
   try {
     const res = await axios.post("/api/auth/getcurrentuser", {
       token: token,
