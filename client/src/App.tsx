@@ -39,5 +39,5 @@ export default function App() {
     },
   ]);
 
-  return <div className="min-h-screen w-full">{routes}</div>;
+  return <div className="min-h-screen w-full bg-palette2">{routes}</div>;
 }

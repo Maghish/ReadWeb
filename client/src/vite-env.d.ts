@@ -10,7 +10,6 @@ interface UserProfileButtonComponentProps {
 }
 
 export {
-  HomePageProps,
   NavbarComponentProps,
   UserProfileButtonComponentProps
 }
