@@ -9,24 +9,31 @@ function SignupForm() {
   const [password, setPassword] = useState<string>("");
 
   function HandleSignUp() {
-    axios.post("/api/auth/createuser", {
-      username: username, 
-      email: email,
-      password: password
-    })
-    .then((response) => {
-      console.log(response);  
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    axios
+      .post("/api/auth/createuser", {
+        username: username,
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
     <div className="fixed w-screen h-screen inset-0 backdrop-blur-sm flex items-center justify-center">
       <div className="h-[600px] w-[500px] bg-gradient-to-tr from-palette9/65 from-10%  via-palette9/80 via-30% to-palette9 to-80% shadow-2xl shadow-palette9/70 rounded-xl flex flex-col items-center p-10">
         <div className="relative self-end">
-          <IconContext.Provider value={{ color:"#FFFFFF", size:"24px", className:"cursor-pointer hover:opacity-85" }}>
+          <IconContext.Provider
+            value={{
+              color: "#FFFFFF",
+              size: "24px",
+              className: "cursor-pointer hover:opacity-85",
+            }}
+          >
             <IoClose />
           </IconContext.Provider>
         </div>
