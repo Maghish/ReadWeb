@@ -2,8 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { IconContext } from "react-icons";
+import { SignupFormComponentProps } from "../vite-env";
 
-function SignupForm(props:any) {
+function SignupForm(props:SignupFormComponentProps) {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

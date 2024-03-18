@@ -5,7 +5,8 @@ import {
   NavbarComponentProps,
   UserProfileButtonComponentProps,
 } from "../vite-env";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import LoginForm from "./LoginForm";
 
 function UserProfileButton(props: UserProfileButtonComponentProps) {
   return (
@@ -20,6 +21,7 @@ function UserProfileButton(props: UserProfileButtonComponentProps) {
 
 function LoginSignupButtons() {
   const [signupFormVisible, setSignupFormVisible] = useState<boolean>(false);
+  const [loginFormVisible, setLoginFormVisible] = useState<boolean>(false);
 
   return (
     <>
@@ -27,6 +29,7 @@ function LoginSignupButtons() {
         <button
           id="Login"
           className="bg-inherit border-2 border-palette1 w-[110px] h-[45px] rounded-lg font-Ubuntu text-palette1"
+          onClick={() => setLoginFormVisible(true)}
         >
           Login
         </button>
@@ -42,6 +45,16 @@ function LoginSignupButtons() {
         <SignupForm
           signupFormState={(v: boolean) => {
             setSignupFormVisible(v);
+          }}
+        />
+      ) : (
+        ""
+      )}
+
+      {loginFormVisible ? (
+        <LoginForm
+          loginFormState={(v: boolean) => {
+            setLoginFormVisible(v);
           }}
         />
       ) : (
