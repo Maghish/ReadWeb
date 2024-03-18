@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import userModel from "../models/userModel";
 
 async function authenticateUser(token: string) {
-  const email = btoa(token);
+  const email = btoa(token).toString();
   // It is 100% sure that the given token will be valid so we don't need error checking
   const user = await userModel.findOne({ email: email });
   return user!;
@@ -32,6 +32,21 @@ async function getUser(req: Request, res: Response) {
 async function createNewUser(req: Request, res: Response) {
   try {
     const { username, email, password } = req.body;
+    userModel.findOne({ username: username }).then((response) => {
+      if (response) {
+        return res
+          .status(400)
+          .json({ message: "User already exists with the same username" });
+      }
+    });
+    userModel.findOne({ email: email }).then((response) => {
+      if (response) {
+        return res
+          .status(400)
+          .json({ message: "User already exists with the same email" });
+      }
+    });
+
     const newUser = new userModel({
       username: username,
       email: email,
@@ -39,16 +54,14 @@ async function createNewUser(req: Request, res: Response) {
       favoriteBooks: [],
     });
     await newUser.save();
-    res
-      .status(200)
-      .json({
-        message: "Successfully created new user",
-        token: atob(email),
-        userData: newUser,
-      });
+    return res.status(200).json({
+      message: "Successfully created new user",
+      token: atob(email).toString(),
+      userData: newUser,
+    });
   } catch (error: any) {
     if (error.response) {
-      res.status(400).json({ message: error.response });
+      return res.status(400).json({ message: error.response });
     } else {
       res
         .status(400)
