@@ -1,12 +1,16 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { IconContext } from "react-icons";
 
-function SignupForm() {
+function SignupForm(props:any) {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  function HandleFormClose() {
+    props.signupFormState(false);
+  }
 
   function HandleSignUp() {
     axios
@@ -34,7 +38,7 @@ function SignupForm() {
               className: "cursor-pointer hover:opacity-85",
             }}
           >
-            <IoClose />
+            <IoClose onClick={HandleFormClose} />
           </IconContext.Provider>
         </div>
 

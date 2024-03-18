@@ -5,7 +5,7 @@ import {
   NavbarComponentProps,
   UserProfileButtonComponentProps,
 } from "../vite-env";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function UserProfileButton(props: UserProfileButtonComponentProps) {
   return (
@@ -20,17 +20,33 @@ function UserProfileButton(props: UserProfileButtonComponentProps) {
 
 function LoginSignupButtons() {
   const [signupFormVisible, setSignupFormVisible] = useState<boolean>(false);
-  
+
   return (
     <>
       <div className="ml-auto flex flex-row">
         <button
           id="Login"
           className="bg-inherit border-2 border-palette1 w-[110px] h-[45px] rounded-lg font-Ubuntu text-palette1"
-        >Login</button>
-        <button id="Signup" className="bg-palette1 w-[110px] h-[45px] rounded-lg font-Ubuntu text-palette9 ml-4" onClick={() => setSignupFormVisible(true)} >Signup</button>
+        >
+          Login
+        </button>
+        <button
+          id="Signup"
+          className="bg-palette1 w-[110px] h-[45px] rounded-lg font-Ubuntu text-palette9 ml-4"
+          onClick={() => setSignupFormVisible(true)}
+        >
+          Signup
+        </button>
       </div>
-      {signupFormVisible ? <SignupForm /> : <></>}
+      {signupFormVisible ? (
+        <SignupForm
+          signupFormState={(v: boolean) => {
+            setSignupFormVisible(v);
+          }}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }
@@ -55,7 +71,11 @@ function Navbar(props: NavbarComponentProps) {
           <a href="https://github.com/Maghish/ReadWeb.git">Github</a>
         </li>
       </ul>
-      {props.page === "Guest" ? <LoginSignupButtons /> : <UserProfileButton userCred={props.userCred} />}
+      {props.page === "Guest" ? (
+        <LoginSignupButtons />
+      ) : (
+        <UserProfileButton userCred={props.userCred} />
+      )}
     </div>
   );
 }
