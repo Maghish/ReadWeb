@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { authenticateUser } from "./userManage";
-import bookModel from "../models/bookModel";
+import { authenticateUser } from "./user.controller";
+import bookModel from "../models/book.model";
 
 async function getAllBooks(req: Request, res: Response) {
   try {

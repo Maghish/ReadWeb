@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import homeRoute from "./routes/home";
-import booksRoute from "./routes/books";
-import tagsRoute from "./routes/tags";
+import homeRoute from "./routes/auth.route";
+import booksRoute from "./routes/books.route";
+import tagsRoute from "./routes/tags.route";
 
 dotenv.config();
 const app = express();

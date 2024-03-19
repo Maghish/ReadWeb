@@ -8,7 +8,7 @@ import {
   writeReviewOnBook,
   addTagsToBook,
   editTagsInBook,
-} from "../controllers/booksManage";
+} from "../controllers/books.controller";
 
 const router = Router();
 

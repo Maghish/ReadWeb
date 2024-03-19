@@ -8,8 +8,8 @@
 */
 
 import { Request, Response } from "express";
-import { authenticateUser } from "./userManage";
-import tagModel from "../models/tagModel";
+import { authenticateUser } from "./user.controller";
+import tagModel from "../models/tag.model";
 
 async function getAllTags(req: Request, res: Response) {
   try {

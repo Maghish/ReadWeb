@@ -9,9 +9,9 @@ import {
   editUserData,
   getCurrentUser,
   getUser,
-} from "../controllers/userManage";
+} from "../controllers/user.controller";
 
-import protect from "../middleware/authenticateUser";
+import protect from "../middleware/auth.middleware";
 
 router.post("/getcurrentuser", protect, getCurrentUser);
 router.post("/createuser", createNewUser);

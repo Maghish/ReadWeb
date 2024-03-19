@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import userModel from "../models/userModel";
+import userModel from "../models/user.model";
 import bcrypt from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
 function generateToken(id: any) {
   return sign({ id }, process.env.JWT_SECRET!, {
-    expiresIn: "30d"
-  })
+    expiresIn: "30d",
+  });
 }
 
 async function authenticateUser(token: string) {

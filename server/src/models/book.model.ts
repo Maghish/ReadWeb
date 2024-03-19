@@ -1,11 +1,15 @@
 import { Decimal128 } from "mongodb";
 import mongoose from "mongoose";
-import tagModel from "./tagModel";
+import tagModel from "./tag.model";
 
 const Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
-  author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'UserModel' },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "UserModel",
+  },
   name: { type: String, required: true },
   description: { type: String, required: true },
   ratings: { type: Decimal128, default: 5.0, required: true },
