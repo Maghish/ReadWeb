@@ -85,12 +85,15 @@ async function loginUser(req: Request, res: Response) {
     }
 
     // Check if user account's password is same
-    if (allUsers[0].password === password) {
+
+    const foundUser = await userModel.findOne({ email: email });
+
+    if (await bcrypt.compare(password, foundUser!.password)) {
       res.status(200).json({
         message: "Successfully authenticated user",
-        token: atob(email),
       });
     }
+
     // Else
     else {
       res.status(200).json({ message: "Password not correct" });
