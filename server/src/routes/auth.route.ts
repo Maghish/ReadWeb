@@ -13,7 +13,7 @@ import {
 
 import protect from "../middleware/auth.middleware";
 
-router.post("/getcurrentuser", protect, getCurrentUser);
+router.get("/getcurrentuser", protect, getCurrentUser);
 router.post("/createuser", createNewUser);
 router.post("/loginuser", loginUser);
 router.post("/edituserdata", protect, editUserData);

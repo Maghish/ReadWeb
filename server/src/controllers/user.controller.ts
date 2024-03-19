@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import userModel from "../models/user.model";
 import bcrypt from "bcryptjs";
-import { sign } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
+import { DecodeJWT } from "../../env";
 
 function generateToken(id: any) {
   return sign({ id }, process.env.JWT_SECRET!, {
@@ -9,23 +10,27 @@ function generateToken(id: any) {
   });
 }
 
-async function authenticateUser(token: string) {
-  const email = btoa(token).toString();
-  // It is 100% sure that the given token will be valid so we don't need error checking
-  const user = await userModel.findOne({ email: email });
-  return user!;
+async function GetCurrentUserUtilFunction(req: Request) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = verify(token, process.env.JWT_SECRET!) as DecodeJWT;
+    const user = await userModel.findById(decoded.id).select("-password");
+    return user;
+  } else {
+    return null;
+  }
 }
 
 async function getUser(req: Request, res: Response) {
   try {
-    const { token, username } = req.body;
-    const currentUser = await authenticateUser(token);
-    if (currentUser) {
-      const user = await userModel.findOne({ username: username });
-      res
-        .status(200)
-        .json({ message: "Successfully found user", userData: user });
-    }
+    const { username } = req.body;
+    const user = await userModel.findOne({ username: username });
+    res
+      .status(200)
+      .json({ message: "Successfully found user", userData: user });
   } catch (error: any) {
     if (error.response) {
       res.status(400).json({ message: error.response });
@@ -111,11 +116,17 @@ async function loginUser(req: Request, res: Response) {
 
 async function getCurrentUser(req: Request, res: Response) {
   try {
-    const { token } = req.body;
-    const user = await authenticateUser(token);
-    res
-      .status(200)
-      .json({ message: "Successfully found current user", userData: user });
+    const currentUser = await GetCurrentUserUtilFunction(req);
+    if (currentUser) {
+      res
+        .status(200)
+        .json({
+          message: "Successfully got the current user",
+          userData: currentUser,
+        });
+    } else {
+      res.status(400).json({ message: "You are not logged in!" });
+    }
   } catch (error: any) {
     if (error.response) {
       res.status(400).json({ message: error.response });
@@ -130,38 +141,56 @@ async function getCurrentUser(req: Request, res: Response) {
 
 async function editUserData(req: Request, res: Response) {
   try {
-    const { token, mode, newData } = req.body; // newData is the data that need to be edited
-    const user = await authenticateUser(token);
+    const { mode, newData } = req.body; // newData is the data that need to be edited
 
-    if (mode === "email") {
-      try {
-        user.email = newData;
-        user.save();
-      } catch (error) {
-        res
-          .status(400)
-          .json({ message: "Unexpected error occurred, please try again" });
+    const user = await GetCurrentUserUtilFunction(req);
+    if (user) {
+      if (mode === "email") {
+        try {
+          user.email = newData;
+          const editedUser = await user.save();
+          res
+            .status(200)
+            .json({
+              message: "Successfully edited the user",
+              editedUser: editedUser,
+            });
+        } catch (error) {
+          res
+            .status(400)
+            .json({ message: "Unexpected error occurred, please try again" });
+        }
       }
-    }
-    if (mode === "password") {
-      try {
-        user.password = newData;
-        user.save();
-      } catch (error) {
-        res
-          .status(400)
-          .json({ message: "Unexpected error occurred, please try again" });
+      if (mode === "password") {
+        try {
+          user.password = newData;
+          const editedUser = await user.save();
+          res.status(200).json({
+            message: "Successfully edited the user",
+            editedUser: editedUser,
+          });
+        } catch (error) {
+          res
+            .status(400)
+            .json({ message: "Unexpected error occurred, please try again" });
+        }
       }
-    }
-    if (mode === "username") {
-      try {
-        user.username = newData;
-        user.save();
-      } catch (error) {
-        res
-          .status(400)
-          .json({ message: "Unexpected error occurred, please try again" });
+      if (mode === "username") {
+        try {
+          user.username = newData;
+          const editedUser = await user.save();
+          res.status(200).json({
+            message: "Successfully edited the user",
+            editedUser: editedUser,
+          });
+        } catch (error) {
+          res
+            .status(400)
+            .json({ message: "Unexpected error occurred, please try again" });
+        }
       }
+    } else {
+      res.status(400).json({ message: "You are not logged in!" });
     }
   } catch (error: any) {
     if (error.response) {
@@ -181,5 +210,5 @@ export {
   getCurrentUser,
   editUserData,
   getUser,
-  authenticateUser,
+  GetCurrentUserUtilFunction,
 };
