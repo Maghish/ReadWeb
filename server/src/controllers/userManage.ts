@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import userModel from "../models/userModel";
+import bcrypt from "bcryptjs";
+
 
 async function authenticateUser(token: string) {
   const email = btoa(token).toString();
@@ -47,16 +49,18 @@ async function createNewUser(req: Request, res: Response) {
       }
     });
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = new userModel({
       username: username,
       email: email,
-      password: password,
+      password: hashedPassword,
       favoriteBooks: [],
     });
     await newUser.save();
     return res.status(200).json({
       message: "Successfully created new user",
-      token: atob(email).toString(),
       userData: newUser,
     });
   } catch (error: any) {
