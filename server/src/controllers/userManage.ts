@@ -1,6 +1,13 @@
 import { Request, Response } from "express";
 import userModel from "../models/userModel";
 import bcrypt from "bcryptjs";
+import { sign } from "jsonwebtoken";
+
+function generateToken(id: any) {
+  return sign({ id }, process.env.JWT_SECRET!, {
+    expiresIn: "30d"
+  })
+}
 
 async function authenticateUser(token: string) {
   const email = btoa(token).toString();
@@ -63,6 +70,7 @@ async function createNewUser(req: Request, res: Response) {
 
     return res.status(200).json({
       message: "Successfully created new user",
+      token: generateToken(newUser._id),
       userData: newUser,
     });
   } catch (error: any) {

@@ -11,10 +11,12 @@ import {
   getUser,
 } from "../controllers/userManage";
 
-router.post("/getcurrentuser", getCurrentUser);
+import protect from "../middleware/authenticateUser";
+
+router.post("/getcurrentuser", protect, getCurrentUser);
 router.post("/createuser", createNewUser);
 router.post("/loginuser", loginUser);
-router.post("/edituserdata", editUserData);
-router.post("/getuser", getUser);
+router.post("/edituserdata", protect, editUserData);
+router.post("/getuser", protect, getUser);
 
 export default router;
