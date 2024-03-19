@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import userModel from "../models/userModel";
 import bcrypt from "bcryptjs";
 
-
 async function authenticateUser(token: string) {
   const email = btoa(token).toString();
   // It is 100% sure that the given token will be valid so we don't need error checking
@@ -49,6 +48,7 @@ async function createNewUser(req: Request, res: Response) {
       }
     });
 
+    // Hash Password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -58,7 +58,9 @@ async function createNewUser(req: Request, res: Response) {
       password: hashedPassword,
       favoriteBooks: [],
     });
+
     await newUser.save();
+
     return res.status(200).json({
       message: "Successfully created new user",
       userData: newUser,
@@ -78,24 +80,13 @@ async function createNewUser(req: Request, res: Response) {
 async function loginUser(req: Request, res: Response) {
   try {
     const { email, password } = req.body;
-    const allUsers = await userModel.find({ email: email });
-    // No user account found
-    if (allUsers.length <= 0) {
-      res.status(400).json({ message: "User not found" });
-    }
-
-    // Check if user account's password is same
-
     const foundUser = await userModel.findOne({ email: email });
 
-    if (await bcrypt.compare(password, foundUser!.password)) {
+    if (foundUser && (await bcrypt.compare(password, foundUser!.password))) {
       res.status(200).json({
         message: "Successfully authenticated user",
       });
-    }
-
-    // Else
-    else {
+    } else {
       res.status(200).json({ message: "Password not correct" });
     }
   } catch (error: any) {
