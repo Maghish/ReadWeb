@@ -98,6 +98,8 @@ async function loginUser(req: Request, res: Response) {
     if (foundUser && (await bcrypt.compare(password, foundUser!.password))) {
       res.status(200).json({
         message: "Successfully authenticated user",
+        token: generateToken(foundUser._id),
+        userData: foundUser
       });
     } else {
       res.status(200).json({ message: "Password not correct" });

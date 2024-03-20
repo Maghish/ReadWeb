@@ -29,6 +29,7 @@ function Home() {
   return (
     <>
       {userLoggedIn === false ? <Navbar page="Guest" /> : <Navbar page="Home" userCred={currentUser} />}
+      
     </>
   );
 }

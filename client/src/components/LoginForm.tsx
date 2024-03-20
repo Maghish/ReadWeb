@@ -3,6 +3,7 @@ import { LoginFormComponentProps } from "../vite-env";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import axios from "axios";
+import SetCookie from "../functions/SetCookie";
 
 function LoginForm(props: LoginFormComponentProps) {
   const [email, setEmail] = useState<string>("");
@@ -14,12 +15,15 @@ function LoginForm(props: LoginFormComponentProps) {
 
   function HandleLogIn() {
     axios
-      .post("/api/auth/createuser", {
+      .post("/api/auth/loginuser", {
         email: email,
         password: password,
       })
       .then((response) => {
         console.log(response);
+        SetCookie('token', response.data.token);
+        axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+        window.location.reload();
       })
       .catch((error) => { console.log(error) })
   }
@@ -50,6 +54,7 @@ function LoginForm(props: LoginFormComponentProps) {
         <input
           className="mt-[25px] w-full h-[50px] bg-palette2 outline-none rounded-lg p-4 font-Ubuntu placeholder:text-palette3"
           placeholder="Password"
+          type="password"
           onChange={(e) => setPassword(e.target.value)}
         ></input>
         <button
