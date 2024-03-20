@@ -9,6 +9,11 @@ interface UserProfileButtonComponentProps {
   userCred: any;
 }
 
+interface UserProfileButtonMenuComponentProps {
+  userCred: any;
+  setVisibility: (v: boolean) => void;
+}
+
 interface SignupFormComponentProps {
   signupFormState: (v: boolean) => void;
 }
@@ -24,6 +29,7 @@ interface HomeBodyComponentProps {
 export {
   NavbarComponentProps,
   UserProfileButtonComponentProps,
+  UserProfileButtonMenuComponentProps,
   SignupFormComponentProps,
   LoginFormComponentProps,
   HomeBodyComponentProps

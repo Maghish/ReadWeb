@@ -4,19 +4,61 @@ import SignupForm from "./SignupForm";
 import {
   NavbarComponentProps,
   UserProfileButtonComponentProps,
+  UserProfileButtonMenuComponentProps,
 } from "../vite-env";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoginForm from "./LoginForm";
+import { FaCaretUp } from "react-icons/fa6";
+
+function UserProfileButtonMenu({ userCred, setVisibility }: UserProfileButtonMenuComponentProps) {
+  const menuDivRef = useRef<HTMLDivElement>(null);
+  
+  function HandleOuterComponentClick(event: any) {
+    if (menuDivRef.current && !menuDivRef.current.contains(event.target)) {
+      setVisibility(false);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', HandleOuterComponentClick);
+
+    return () => document.removeEventListener('mousedown', HandleOuterComponentClick);
+  })
+
+  return (
+    <div ref={menuDivRef} className="absolute top-[40px] flex flex-col items-center w-auto">
+      <IoMdArrowDropup color="#FFFFFF" size="18px" />
+      <ul className="relative bottom-[7px] rounded-lg w-28 bg-palette1 h-auto px-2 py-4 flex flex-col">
+        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer">Profile</li>
+        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer">Write a book</li>
+        <li className="w-full font-Ubuntu text-sm text-center cursor-pointer">Logout</li>
+      </ul>
+    </div>
+  );
+}
 
 function UserProfileButton(props: UserProfileButtonComponentProps) {
+  const [dropDownMenuVisible, setDropDownMenuVisible] =
+    useState<boolean>(false);
+
   return (
-    <div className="ml-auto group flex flex-col items-end cursor-pointer w-auto">
+    <div className="ml-auto group flex flex-col items-center cursor-pointer w-auto">
       <IconContext.Provider value={{ size: "25px", color: "#FFFFFF" }}>
-        <FaRegCircleUser />
+        <FaRegCircleUser
+          onClick={() => {
+            dropDownMenuVisible
+              ? setDropDownMenuVisible(false)
+              : setDropDownMenuVisible(true);
+          }}
+        />
       </IconContext.Provider>
-      <span className="absolute w-max top-[50px] right-8 scale-0 border-2 border-[#4b4b4b] bg-[#373737] p-2 text-xs text-palette2 group-hover:scale-100">
-        {props.userCred.username}
-      </span>
+      {dropDownMenuVisible ? (
+        <UserProfileButtonMenu userCred={props.userCred} setVisibility={(v: boolean) => {setDropDownMenuVisible(v)}}  />
+      ) : (
+        <span className="absolute w-max top-[50px] scale-0 border-2 border-[#4b4b4b] bg-[#373737] p-2 text-xs text-palette2 group-hover:scale-100">
+          {props.userCred.username}
+        </span>
+      )}
     </div>
   );
 }
