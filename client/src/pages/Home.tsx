@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import GetCookie from "../functions/GetCookie";
 import axios from "axios";
+import HomeBody from "../components/HomeBody";
 
 function Home() {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>();
@@ -29,7 +30,7 @@ function Home() {
   return (
     <>
       {userLoggedIn === false ? <Navbar page="Guest" /> : <Navbar page="Home" userCred={currentUser} />}
-      
+      {userLoggedIn === false ? <HomeBody /> : <HomeBody userCred={currentUser} />}
     </>
   );
 }

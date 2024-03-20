@@ -17,9 +17,14 @@ interface LoginFormComponentProps {
   loginFormState: (v: boolean) => void;
 }
 
+interface HomeBodyComponentProps {
+  userCred?: any;
+}
+
 export {
   NavbarComponentProps,
   UserProfileButtonComponentProps,
   SignupFormComponentProps,
-  LoginFormComponentProps
+  LoginFormComponentProps,
+  HomeBodyComponentProps
 };
