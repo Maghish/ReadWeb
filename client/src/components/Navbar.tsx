@@ -14,7 +14,7 @@ function UserProfileButton(props: UserProfileButtonComponentProps) {
       <IconContext.Provider value={{ size: "25px", color: "#FFFFFF" }}>
         <FaRegCircleUser />
       </IconContext.Provider>
-      <span className="absolute w-max top-[50px] right-8 scale-0 border-2 border-[#4b4b4b] bg-[#373737] p-2 text-xs text-palette2 group-hover:scale-100"></span>
+      <span className="absolute w-max top-[50px] right-8 scale-0 border-2 border-[#4b4b4b] bg-[#373737] p-2 text-xs text-palette2 group-hover:scale-100">{props.userCred.username}</span>
     </div>
   );
 }

@@ -14,6 +14,13 @@ import PageNotFound from "./pages/PageNotFound";
 
 axios.defaults.baseURL = "http://localhost:7000";
 
+const token = GetCookie("token");
+if (token) {
+  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+} else {
+  delete axios.defaults.headers.common["Authorization"];
+}
+
 export default function App() {
   let routes = useRoutes([
     {

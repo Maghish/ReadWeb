@@ -3,6 +3,7 @@ import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { IconContext } from "react-icons";
 import { SignupFormComponentProps } from "../vite-env";
+import SetCookie from "../functions/SetCookie";
 
 function SignupForm(props:SignupFormComponentProps) {
   const [username, setUsername] = useState<string>("");
@@ -22,6 +23,9 @@ function SignupForm(props:SignupFormComponentProps) {
       })
       .then((response) => {
         console.log(response);
+        SetCookie('token', response.data.token);
+        axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
