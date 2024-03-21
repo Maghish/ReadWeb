@@ -26,12 +26,24 @@ function UserProfileButtonMenu({ username, setVisibility }: UserProfileButtonMen
   })
 
   return (
-    <div ref={menuDivRef} className="absolute top-[40px] flex flex-col items-center w-auto">
+    <div
+      ref={menuDivRef}
+      className="absolute top-[40px] flex flex-col items-center w-auto"
+    >
       <IoMdArrowDropup color="#FFFFFF" size="18px" />
       <ul className="relative bottom-[7px] rounded-lg w-28 bg-palette1 h-auto px-2 py-4 flex flex-col">
-        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer hover:opacity-75">Profile</li>
-        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer hover:opacity-75">Write a book</li>
-        <li className="w-full font-Ubuntu text-sm text-center cursor-pointer hover:opacity-75">Logout</li>
+        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer transition duration-150 ease-in hover:text-palette5">
+          Profile
+        </li>
+        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer transition duration-150 ease-in hover:text-palette5">
+          My books
+        </li>
+        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer transition duration-150 ease-in hover:text-palette5">
+          Write a book
+        </li>
+        <li className="w-full font-Ubuntu text-sm text-center cursor-pointer transition duration-150 ease-in hover:text-palette5">
+          Logout
+        </li>
       </ul>
     </div>
   );
@@ -118,13 +130,6 @@ function Navbar(props: NavbarComponentProps) {
         ReadWeb
       </a>
       <ul className="flex flex-row ml-[70px] items-center">
-        {props.page === "Guest" ? (
-          ""
-        ) : (
-          <li className="font-Ubuntu text-palette2 mr-6 cursor-pointer transition duration-150 ease-in hover:text-palette5">
-            <a href="/mybooks">My Books</a>
-          </li>
-        )}
         <li className="font-Ubuntu text-palette2 mr-6 cursor-pointer transition duration-150 ease-in hover:text-palette5">
           <a href="/explore">Explore</a>
         </li>

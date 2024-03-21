@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import MyBooks from "./pages/MyBooks";
 import Explore from "./pages/Explore";
 import PageNotFound from "./pages/PageNotFound";
+import WriteBook from "./pages/WriteBook";
+import Profile from "./pages/Profile";
 
 axios.defaults.baseURL = "http://localhost:7000";
 
@@ -37,6 +39,14 @@ export default function App() {
         {
           path: "explore",
           element: <Explore />,
+        },
+        {
+          path: "writebook",
+          element: <WriteBook />
+        },
+        {
+          path: "profile",
+          element: <Profile />
         },
         {
           path: "*",

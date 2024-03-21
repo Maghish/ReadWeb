@@ -27,7 +27,7 @@ function Explore() {
       {userLoggedIn === false ? (
         <Navbar page="Guest" />
       ) : (
-        <Navbar page="Home" userCred={currentUser} />
+        <Navbar page="Home" username={currentUser.username} />
       )}
     </>
   );
