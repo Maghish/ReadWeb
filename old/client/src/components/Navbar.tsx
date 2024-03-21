@@ -122,7 +122,7 @@ function LoginSignupButtons() {
 
 function Navbar(props: NavbarComponentProps) {
   return (
-    <div className="fixed flex flex-row items-center w-full h-[60px] bg-palette9 px-[50px] py-[17px]">
+    <div className="flex flex-row items-center w-full h-[60px] bg-palette9 px-[50px] py-[17px]">
       <a
         className="font-Ubuntu font-bold text-xl text-palette1 cursor-pointer"
         href="/"

@@ -55,16 +55,6 @@ const bookSchema = new Schema({
   tags: {
     type: [{ type: String, ref: "TagModel" }],
     required: true,
-    validate: {
-      validator: async (v: []) => {
-        const validIds = await Promise.all(
-          v.map(async (name) => await tagModel.findOne({ name: name }))
-        );
-        return validIds.every((doc) => !!doc); // Check for falsy values (null or undefined)
-      },
-      message:
-        "Invalid TagModel references. Please ensure all IDs exist in TagModel collection.",
-    },
   },
 });
 

@@ -7,7 +7,7 @@ async function getAllBooks(req: Request, res: Response) {
     const { filter, extraData } = req.body;
 
     if (filter === "None") {
-      const allBooks = await bookModel.find({});
+      const allBooks = await bookModel.find().sort({ createdAt: 1 });
       res.status(200).json({
         message: "Successfully fetched all books",
         allBooks: allBooks,
@@ -115,6 +115,8 @@ async function createBook(req: Request, res: Response) {
       res
         .status(400)
         .json({ message: "Unexpected error occurred, please try again" });
+      
+      throw error
     }
   }
 }
