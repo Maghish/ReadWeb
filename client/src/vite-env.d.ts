@@ -2,15 +2,15 @@
 
 interface NavbarComponentProps {
   page: "Guest" | "Home" | "About" | "Explore";
-  userCred?: any;
+  username?: string;
 }
 
 interface UserProfileButtonComponentProps {
-  userCred: any;
+  username: string;
 }
 
 interface UserProfileButtonMenuComponentProps {
-  userCred: any;
+  username: string;
   setVisibility: (v: boolean) => void;
 }
 

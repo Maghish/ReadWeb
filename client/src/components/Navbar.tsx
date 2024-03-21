@@ -8,9 +8,9 @@ import {
 } from "../vite-env";
 import { useEffect, useRef, useState } from "react";
 import LoginForm from "./LoginForm";
-import { FaCaretUp } from "react-icons/fa6";
+import { IoMdArrowDropup } from "react-icons/io";
 
-function UserProfileButtonMenu({ userCred, setVisibility }: UserProfileButtonMenuComponentProps) {
+function UserProfileButtonMenu({ username, setVisibility }: UserProfileButtonMenuComponentProps) {
   const menuDivRef = useRef<HTMLDivElement>(null);
   
   function HandleOuterComponentClick(event: any) {
@@ -29,9 +29,9 @@ function UserProfileButtonMenu({ userCred, setVisibility }: UserProfileButtonMen
     <div ref={menuDivRef} className="absolute top-[40px] flex flex-col items-center w-auto">
       <IoMdArrowDropup color="#FFFFFF" size="18px" />
       <ul className="relative bottom-[7px] rounded-lg w-28 bg-palette1 h-auto px-2 py-4 flex flex-col">
-        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer">Profile</li>
-        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer">Write a book</li>
-        <li className="w-full font-Ubuntu text-sm text-center cursor-pointer">Logout</li>
+        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer hover:opacity-75">Profile</li>
+        <li className="mb-2 w-full pb-2 border-b-2 border-palette2 font-Ubuntu text-sm text-center cursor-pointer hover:opacity-75">Write a book</li>
+        <li className="w-full font-Ubuntu text-sm text-center cursor-pointer hover:opacity-75">Logout</li>
       </ul>
     </div>
   );
@@ -53,10 +53,10 @@ function UserProfileButton(props: UserProfileButtonComponentProps) {
         />
       </IconContext.Provider>
       {dropDownMenuVisible ? (
-        <UserProfileButtonMenu userCred={props.userCred} setVisibility={(v: boolean) => {setDropDownMenuVisible(v)}}  />
+        <UserProfileButtonMenu username={props.username} setVisibility={(v: boolean) => {setDropDownMenuVisible(v)}}  />
       ) : (
         <span className="absolute w-max top-[50px] scale-0 border-2 border-[#4b4b4b] bg-[#373737] p-2 text-xs text-palette2 group-hover:scale-100">
-          {props.userCred.username}
+          {props.username}
         </span>
       )}
     </div>
@@ -135,7 +135,7 @@ function Navbar(props: NavbarComponentProps) {
       {props.page === "Guest" ? (
         <LoginSignupButtons />
       ) : (
-        <UserProfileButton userCred={props.userCred} />
+        <UserProfileButton username={props.username!} />
       )}
     </div>
   );

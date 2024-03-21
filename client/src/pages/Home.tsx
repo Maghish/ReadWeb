@@ -29,7 +29,7 @@ function Home() {
 
   return (
     <>
-      {userLoggedIn === false ? <Navbar page="Guest" /> : <Navbar page="Home" userCred={currentUser} />}
+      {userLoggedIn === false ? <Navbar page="Guest" /> : <Navbar page="Home" username={currentUser.username} />}
       {userLoggedIn === false ? <HomeBody /> : <HomeBody userCred={currentUser} />}
     </>
   );
