@@ -20,7 +20,7 @@ function App() {
   ]);
 
   return (
-    <div className="min-h-screen w-full bg-palette2">
+    <div className="min-h-screen min-w-full bg-palette2">
       <Context.Provider value={{ mode: "Guest" }}>{routes}</Context.Provider>
     </div>
   );

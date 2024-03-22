@@ -8,7 +8,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="min-w-full min-h-16 bg-palette9 px-7 py-2 flex flex-row items-center">
+      <div className="min-w-full w-auto min-h-16 bg-palette9 px-4 sm:px-7 py-2 flex flex-row items-center">
         {/* Header */}
         <a
           href="/"
@@ -21,13 +21,13 @@ function Navbar() {
         <MdMenu
           color="#FFFFFF"
           size="32px"
-          className="visible md:invisible ml-auto cursor-pointer hover:opacity-80"
+          className="visible md:invisible cursor-pointer flex-shrink-0 flex-grow-0 justify-end hover:opacity-80"
           onClick={() => {
             setHamburgerActive(!hamburgerActive);
           }}
         />
       </div>
-      <HamburgerMenuNavLinks />
+      {hamburgerActive ? <HamburgerMenuNavLinks /> : ""}
     </>
   );
 }
