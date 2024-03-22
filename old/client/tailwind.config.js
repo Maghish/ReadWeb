@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        Ubuntu: ["Ubuntu", "sans-serif"],
+        Roboto: ["Roboto", "sans-serif"],
       },
       colors: {
         palette1: "#FFFFFF",
