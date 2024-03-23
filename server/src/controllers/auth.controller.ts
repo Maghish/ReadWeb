@@ -88,13 +88,7 @@ async function getUser(req: Request, res: Response) {
       .status(200)
       .json({ message: "Successfully found user", userData: user });
   } catch (error: any) {
-    if (error.response) {
-      res.status(400).json({ message: error.response });
-    } else {
-      res
-        .status(400)
-        .json({ message: "Unexpected error occurred, please try again" });
-    }
+    return res.status(400).json({ message: error });
   }
 }
 
