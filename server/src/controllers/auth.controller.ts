@@ -1,12 +1,27 @@
 import { Request, Response } from "express";
 import UserModel from "../models/auth.model";
-import { sign } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 import { genSalt, hash, compare } from "bcryptjs";
+import { DecodeJWT } from "../../env";
 
 function generateToken(id: any) {
   return sign({ id }, process.env.JWT_SECRET!, {
     expiresIn: "30d",
   });
+}
+
+async function GetCurrentUserUtilFunction(req: Request) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = verify(token, process.env.JWT_SECRET!) as DecodeJWT;
+    const user = await UserModel.findById(decoded.id).select("-password");
+    return user;
+  } else {
+    return null;
+  }
 }
 
 async function signupUser(req: Request, res: Response) {
@@ -92,4 +107,27 @@ async function getUser(req: Request, res: Response) {
   }
 }
 
-export { signupUser, loginUser, getUser };
+async function getCurrentUser(req: Request, res: Response) {
+  try {
+    const currentUser = await GetCurrentUserUtilFunction(req);
+    if (currentUser) {
+      res.status(200).json({
+        message: "Successfully got the current user",
+        userData: currentUser,
+      });
+    } else {
+      res.status(400).json({ message: "You are not authenticated!" });
+    }
+  } catch (error: any) {
+    if (error.response) {
+      res.status(400).json({ message: error.response });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Unexpected error occurred please try again" });
+      throw error;
+    }
+  }
+}
+
+export { signupUser, loginUser, getUser, getCurrentUser };
