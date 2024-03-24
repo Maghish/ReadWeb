@@ -119,15 +119,63 @@ async function getCurrentUser(req: Request, res: Response) {
       res.status(400).json({ message: "You are not authenticated!" });
     }
   } catch (error: any) {
-    if (error.response) {
-      res.status(400).json({ message: error.response });
-    } else {
-      res
-        .status(400)
-        .json({ message: "Unexpected error occurred please try again" });
-      throw error;
-    }
+    return res.status(400).json({ message: error })
   }
 }
 
-export { signupUser, loginUser, getUser, getCurrentUser };
+async function editUser(req: Request, res: Response) {
+  try {
+    const { mode, newData } = req.body; // newData is the data that need to be edited
+    
+    const user = await GetCurrentUserUtilFunction(req);
+    if (user) {
+      if (mode === "email") {
+        try {
+          user.email = newData;
+          const editedUser = await user.save();
+          return res.status(200).json({
+            message: "Successfully edited the user",
+            editedUser: editedUser,
+          });
+        } catch (error) {
+          return res
+            .status(400)
+            .json({ message: "Unexpected error occurred, please try again" });
+        }
+      }
+      if (mode === "password") {
+        try {
+          user.password = newData;
+          const editedUser = await user.save();
+          return res.status(200).json({
+            message: "Successfully edited the user",
+            editedUser: editedUser,
+          });
+        } catch (error) {
+          return res
+            .status(400)
+            .json({ message: "Unexpected error occurred, please try again" });
+        }
+      }
+      if (mode === "username") {
+        try {
+          user.username = newData;
+          const editedUser = await user.save();
+          return res.status(200).json({
+            message: "Successfully edited the user",
+            editedUser: editedUser,
+          });
+        } catch (error) {
+          return res
+            .status(400)
+            .json({ message: "Unexpected error occurred, please try again" });
+        }
+      }
+    }
+  }
+  catch (error: any) {
+    return res.status(400).json({ message: error })
+  }
+}
+
+export { signupUser, loginUser, getUser, getCurrentUser, editUser };
