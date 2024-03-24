@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signupUser, loginUser, getUser, getCurrentUser } from "../controllers/auth.controller";
+import { signupUser, loginUser, getUser, getCurrentUser, editUser } from "../controllers/auth.controller";
 
 import protect from "../middleware/auth.middleware";
 
@@ -9,7 +9,6 @@ router.post('/signup', signupUser);
 router.post('/login', loginUser);
 router.get('/getuser', protect, getUser);
 router.get('/getcurrentuser', protect, getCurrentUser);
-// POST edituser
-// DELETE signout
+router.post('/edituser', protect, editUser);
 
 export default router
