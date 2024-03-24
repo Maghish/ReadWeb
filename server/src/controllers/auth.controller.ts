@@ -145,7 +145,11 @@ async function editUser(req: Request, res: Response) {
       }
       if (mode === "password") {
         try {
-          user.password = newData;
+          // Hash Password
+          const salt = await genSalt(10);
+          const hashedPassword = await hash(newData, salt);
+          user.password = hashedPassword;
+          
           const editedUser = await user.save();
           return res.status(200).json({
             message: "Successfully edited the user",
