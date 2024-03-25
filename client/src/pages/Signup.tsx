@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import SetCookie from "../functions/SetCookie";
 
 function Signup() {
   const [username, setUsername] = useState<string>("");
@@ -11,8 +12,12 @@ function Signup() {
       username: username,
       email: email,
       password: password
-    }).then((response) => {
+    }).then((response: any) => {
       console.log(response);
+      SetCookie("token", response.data.token);
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + response.data.token;
+      window.location.reload();
     })
   }
 
