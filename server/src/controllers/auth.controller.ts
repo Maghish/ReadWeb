@@ -88,7 +88,7 @@ async function loginUser(req: Request, res: Response) {
         userData: foundUser,
       });
     } else {
-      res.status(200).json({ message: "Password not correct" });
+      res.status(400).json({ message: "Password not correct" });
     }
   } catch (error: any) {
     return res.status(400).json({ message: error });
