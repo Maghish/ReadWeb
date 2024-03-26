@@ -20,7 +20,6 @@ function DecidePage() {
   async function GetCurrentUser() {
     try {
       const res = await axios.get("/auth/getcurrentuser");
-      console.log(res);
       setUserCred(res.data.userData);
       return true;
     } catch (error: any) {

@@ -1,7 +1,9 @@
+import UserProfileButton from "./UserProfileButton";
+
 function Navlinks() {
   return (
     <>
-      <div className="ml-[120px] mr-auto w-full flex items-center gap-5 invisible md:visible">
+      <div className="ml-[120px] w-full flex items-center gap-5 invisible md:visible">
         <span className="text-palette2 text-sm font-Roboto cursor-pointer transition-all duration-200 ease-in hover:text-palette5">
           Explore
         </span>
@@ -17,9 +19,10 @@ function Navlinks() {
         <span className="text-palette2 text-sm font-Roboto cursor-pointer transition-all duration-200 ease-in hover:text-palette5">
           Github
         </span>
+        <UserProfileButton />
       </div>
     </>
   );
 }
- 
+
 export default Navlinks;
