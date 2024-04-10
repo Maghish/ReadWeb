@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<false | string>(false);
   const navigate = useNavigate();
 
   function LoginUser() {
@@ -15,17 +16,24 @@ function Login() {
         password: password,
       })
       .then((response: any) => {
-        console.log(response);
+        setErrorMessage(false);
         SetCookie("token", response.data.token);
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + response.data.token;
         navigate("/");
-      });
+      }).catch((error: any) => {
+        setErrorMessage(error.response.data.message);
+      })
   }
 
   return (
     <div className="absolute min-w-full min-h-screen bg-palette2 flex items-center justify-center">
       <form className="flex flex-col bg-palette9 w-[500px] min-h-[400px] h-auto p-10 rounded-lg gap-y-7">
+        {errorMessage ? (
+          <div className="w-full text-center text-red-600 p-4 bg-red-100 rounded-md border-2 border-red-600">{errorMessage}</div>
+        ) : (
+          ""
+        )}
         <h1 className="text-palette2 text-2xl self-center font-Roboto">
           Log in
         </h1>
