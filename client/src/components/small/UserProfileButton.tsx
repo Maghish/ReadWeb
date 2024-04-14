@@ -30,7 +30,7 @@ function UserProfileButton() {
       <button
         className="cursor-pointer self-center"
         onClick={() => {
-          setButtonMenuVisible(true);
+          setButtonMenuVisible(!buttonMenuVisible);
         }}
       >
         <FaRegUserCircle color="#F5F3F4" size="24px" />
