@@ -8,6 +8,7 @@ import GetCookie from "./functions/GetCookie";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import WriteBook from "./pages/WriteBook";
 
 axios.defaults.baseURL = "http://localhost:7000/api";
 
@@ -76,6 +77,10 @@ function App() {
           path: "/login",
           element: <Login />,
         },
+        {
+          path: "/writebook",
+          element: <WriteBook />,
+        }
       ],
     },
   ]);

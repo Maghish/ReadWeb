@@ -11,9 +11,9 @@ function Navlinks() {
         <span className="text-palette2 text-sm font-Roboto cursor-pointer transition-all duration-200 ease-in hover:text-palette5">
           Bookmarks
         </span>
-        <span className="text-palette2 text-sm font-Roboto cursor-pointer transition-all duration-200 ease-in hover:text-palette5">
+        <a href="/writebook" className="text-palette2 text-sm font-Roboto cursor-pointer transition-all duration-200 ease-in hover:text-palette5">
           Write a book
-        </span>
+        </a>
         <span className="text-palette2 text-sm font-Roboto cursor-pointer transition-all duration-200 ease-in hover:text-palette5">
           Github
         </span>
